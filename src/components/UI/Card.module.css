@@ -5,3 +5,7 @@
    width: min(90%, 600px);
    margin: 0 auto 4rem;
 }
+
+.card p {
+   text-align: center;
+}
