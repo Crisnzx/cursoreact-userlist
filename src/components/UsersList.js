@@ -10,18 +10,18 @@ function UsersList(props) {
 
    let content;
 
-   if (props.listUsers.length === 0) {
-      content = <p>Nothing here. You should add a new user</p>
+   if (props.usersList.length === 0) {
+      content = <p>Nothing here. You should add a new user</p>;
    } else {
       content = (
          <ul className={styles['users-list']}>
-            {props.listUsers.map(listUser => (
+            {props.usersList.map(user => (
                <UserItem
                   onDeleteUser={deleteUserHandler}
-                  id={listUser.id}
-                  key={listUser.id}
-                  name={listUser.name}
-                  age={listUser.age}
+                  id={user.id}
+                  key={user.id}
+                  name={user.name}
+                  age={user.age}
                />))}
          </ul>
       );

@@ -12,4 +12,5 @@
 .input-group input {
    width: 100%;
    padding: 0.6rem;
+   font-size: inherit;
 }

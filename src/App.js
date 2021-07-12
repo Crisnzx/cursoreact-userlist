@@ -1,4 +1,4 @@
-import styles from './App.module.css';
+// import styles from './App.module.css';
 import InputArea from './components/InputArea';
 import UsersList from './components/UsersList';
 import Modal from './components/UI/Modal';
@@ -6,42 +6,44 @@ import { useState } from 'react';
 
 function App() {
 
-  const [listUsers, setListUsers] = useState([]);
-  const [toggleModal, setToggleModal] = useState(false);
-  const [isEmptyValues, setIsEmptyValues] = useState(true);
+  const [usersList, setUsersList] = useState([]);
+  const [error, setError] = useState();
+  
 
   function addUserHandler(user) {
-    setListUsers((lastState) => {
-      const updatedState = [...lastState];
-      updatedState.push(user);
-      return updatedState;
+    setUsersList((lastState) => {
+      console.log(lastState);
+
+      return [...lastState, user];
     });
   }
 
   function deleteUserHandler(id) {
-    setListUsers((lastState) => {
+    setUsersList((lastState) => {
       const updatedState = lastState.filter((user) => user.id !== id);
       return updatedState;
     });
   }
 
-  
-
   function emptyValuesErrorHandler() {
-    setToggleModal(true);
-    setIsEmptyValues(true);
+    setError({
+      title: 'Invalid input',
+      message: 'Please enter a valid name and age (non-empty values).'
+  });
   }
 
   function invalidAgeErrorHandler() {
-    setToggleModal(true);
-    setIsEmptyValues(false);
+    setError({
+      title: 'Invalid age',
+      message: 'Please enter a valid age (> 0).'
+    });
   }
 
   return (
     <div>
-      <InputArea showInvalidAgeError={invalidAgeErrorHandler} showEmptyValuesError={emptyValuesErrorHandler} onAddUser={addUserHandler} />
-      <UsersList onDeleteUser={deleteUserHandler} listUsers={listUsers} />
-      {toggleModal && <Modal toggleModal={() => setToggleModal(false)} isEmptyValuesError={isEmptyValues} />}
+      <InputArea onAddUser={addUserHandler} showInvalidAgeError={invalidAgeErrorHandler} showEmptyValuesError={emptyValuesErrorHandler} />
+      <UsersList onDeleteUser={deleteUserHandler} usersList={usersList} />
+      {error && <Modal closeModal={() => setError(undefined)} title={error.title} message={error.message} />}
     </div>
   );
 }
